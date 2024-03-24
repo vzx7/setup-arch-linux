@@ -52,4 +52,19 @@ lvcreate -L 40GB volgroup0 -n lv_root
 lvcreate -L 100%FREE volgroup0 -n lv_home
 lvdisplay
 modprobe dm_mod
+vgscan
+vgchange -ay
+mkfs.ext4 /dev/volgroup0/lv_root
+mkfs.ext4 /dev/volgroup0/lv_home
+```
+
+## Mount
+
+```bash
+mount /dev/volgroup0/lv_root /mnt
+mkdir /mnt/boot
+mount /dev/disk_name2 /mnt/boot
+mkdir /mnt/home
+mount /dev/volgroup0/lv_root /mnt
+mount /dev/volgroup0/lv_home /mnt/home
 ```
