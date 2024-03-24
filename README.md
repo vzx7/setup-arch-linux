@@ -19,22 +19,37 @@ $ sudo dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/disk/by-id/usb-M
 
 ```bash
 # see device name (wlan0)
-$ ip addr show
-$ iwctl
-$ station wlan0 get-networks
-$ exit
-$ iwctl --passphrase "you_pass" station wlan0 connect network_name
+ip addr show
+iwctl
+station wlan0 get-networks
+exit
+iwctl --passphrase "you_pass" station wlan0 connect network_name
 ```
 
 ## Disk partitioning
 
 ```bash
 $ lsblk
-$ fdisk /dev/disk_name
-$ g
-$ p
-$ n # +1G
-$ n # +1G
-$ n # +100%FREE
-$ w
+fdisk /dev/disk_name
+g
+p
+n # +1G
+n # +1G
+n # +100% FREE
+w
+```
+## Disk formatting
+
+```bash
+mkfs.fat -F32 /dev/disk_name1
+mkfs.ext4 /dev/disk_name2
+# create LVM with crypt
+cryptsetup luksFormat /dev/disk_name3
+cryptsetup open --type luks /dev/disk_name3 lvm
+pvcreate /dev/mapper/lvm
+vgcreate volgroup0 /dev/mapper/lvm
+lvcreate -L 40GB volgroup0 -n lv_root
+lvcreate -L 100%FREE volgroup0 -n lv_home
+lvdisplay
+modprobe dm_mod
 ```
