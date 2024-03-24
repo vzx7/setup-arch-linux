@@ -1,5 +1,6 @@
 # setup-arch-linux
 Step-by-step instructions for installing and configuring arch linux (i3wm)
+Based on https://www.youtube.com/watch?v=FxeriGuJKTM
 
 ## Get ISO and b2sums, verification
 ```bash
