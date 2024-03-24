@@ -161,3 +161,4 @@ Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 ```
+Copy i3 configuration from https://github.com/vzx7/i3-config
