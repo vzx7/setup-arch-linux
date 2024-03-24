@@ -68,3 +68,27 @@ mkdir /mnt/home
 mount /dev/volgroup0/lv_root /mnt
 mount /dev/volgroup0/lv_home /mnt/home
 ```
+
+## Install system
+
+```bash
+pacstrap  -i /mnt base
+genfstab -U -p /mnt >> /etc/fstab
+arch-root /mnt
+passwd
+useradd -mg users -G wheel user_name
+passwd user_name
+pacman -S base-devel dosfstools grub efibootmgr lvm2 mtools networkmanager os-prober sudo linux-lts linux-lts-headers linux-firmware mesa xorg-server xorg-xinit xorg-xrandr xorg-xrdb i3-wm i3status i3lock i3-nagbar dmenu xinit pcmanfm htop tilda xed nm-aplet setxkbmap ttf-dejavu ttf-liberation xf86-input-libinput ttf-croscore ttf-dejavu ttf-ubuntu-font-family ttf-inconsolata ttf-liberation ttf-font-awesome fontconfig freetype2-demos lxappearance gparted feh deepin-screen-recorder deepin-terminal viewnior ssh-keygen openssh libreoffice p7zip engrampa git code gvfs transmission pipewire pipewire-pulse nodejs npm docker docker-compose 
+mkinitcpio -p linux-lts
+nano /etc/locale-gen # ru and en
+locale-gen
+nano /etc/default/grub # GRUB_CDMLINE_LINUX_DEFAULT add before quite "cryptdevice=/dev/disk_name3:voigroup0"
+mkdir /boot/EFI
+mount /dev/disk_name1 /boot/EFI
+grub-install --target=x86_64-efi --bootloader-id=grup_uefi --recheck
+cp /usr/share/locale/en\@quot/LC_MASSAGES/grub.mo /boot/grub/locale/en.mo
+grub-mkconfig -o /boot/grub/grub.cfg
+systemctl enable NetworkMananger
+exit 
+umount -a
+```
