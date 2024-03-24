@@ -14,3 +14,27 @@ $ lsblk
 $ sudo dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct status=progress
 # restart system and start from USB
 ```
+
+## Set WiFi connect
+
+```bash
+# see device name (wlan0)
+$ ip addr show
+$ iwctl
+$ station wlan0 get-networks
+$ exit
+$ iwctl --passphrase "you_pass" station wlan0 connect network_name
+```
+
+## Disk partitioning
+
+```bash
+$ lsblk
+$ fdisk /dev/disk_name
+$ g
+$ p
+$ n # +1G
+$ n # +1G
+$ n # +100%FREE
+$ w
+```
